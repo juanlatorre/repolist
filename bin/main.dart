@@ -1,6 +1,7 @@
 import 'package:github/github.dart';
 import 'dart:io';
 import 'package:args/args.dart';
+import 'package:colorize/colorize.dart';
 
 RegExp githubUserRegExp = RegExp(r'^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$');
 
@@ -21,8 +22,15 @@ Future<void> getPublicRepos(String user) async {
 
   await github.repositories.listUserRepositories(user).toList().then((repos) {
     repos.forEach((repo) {
-      var repoUrl = repo.toString().split('Repository: ')[1];
-      stdout.writeln(repo.toString() + ' | URI: https://github.com/'+repoUrl);
+      var repoName = repo.toString().split('Repository: ')[1];
+
+      var colorizedRepoName = Colorize(repoName);
+      colorizedRepoName.lightYellow();
+
+      var colorizedUrl = Colorize('https://github.com/' + repoName);
+      colorizedUrl.lightMagenta();
+
+      stdout.writeln('Repository: ${colorizedRepoName} | URI: ${colorizedUrl}');
     });
   });
 }
