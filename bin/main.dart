@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:args/args.dart';
 
 RegExp githubUserRegExp = RegExp(r'^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$');
-var github = GitHub();
 
 void main(List<String> args) {
   var parser = ArgParser();
@@ -18,5 +17,12 @@ void main(List<String> args) {
 }
 
 Future<void> getPublicRepos(String user) async {
-  print(user);
+  var github = GitHub();
+
+  await github.repositories.listUserRepositories(user).toList().then((repos) {
+    repos.forEach((repo) {
+      var repoUrl = repo.toString().split('Repository: ')[1];
+      stdout.writeln(repo.toString() + ' | URI: https://github.com/'+repoUrl);
+    });
+  });
 }
