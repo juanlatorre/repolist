@@ -51,7 +51,6 @@ void main(List<String> args) {
             var colorizedErrorMessageOnLogin = Colorize('There was an error on Login, please try again...');
             colorizedErrorMessageOnLogin.red();
             stdout.writeln(colorizedErrorMessageOnLogin);
-            exit(0);
           }
         });
       } else {
@@ -104,7 +103,6 @@ Future<void> getPublicRepos(String user) async {
     });
   });
 
-  exit(0);
 }
 
 Future<void> getPrivateRepos(GitHub ghAuth) async {
@@ -122,7 +120,6 @@ Future<void> getPrivateRepos(GitHub ghAuth) async {
     });
   });
 
-  exit(0);
 }
 
 // Future<bool> isUserLoggedInGithub() async {
